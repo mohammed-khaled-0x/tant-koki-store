@@ -1976,7 +1976,7 @@ window.__ALL__ = [
   },
   {
     "id": "6221029210872",
-    "name": "https://raw.githubusercontent.com/mohammed-khaled-0x/Tant-koki/refs/heads/main/021.png",
+    "name": "استربس حلواني بارد 1 كيلو",
     "category": "دواجن",
     "company": "حلواني اخوان",
     "unit": "قطعة",
