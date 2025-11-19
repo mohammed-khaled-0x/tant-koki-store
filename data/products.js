@@ -282,7 +282,7 @@ window.__ALL__ = [
     "price": 24,
     "sale_price": null,
     "in_stock": true,
-    "image_url": "./logo.jpg",
+    "image_url": "",
     "description": "",
     "tags": [],
     "weight_g": "",
