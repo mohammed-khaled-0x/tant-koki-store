@@ -5,8 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>طنط كوكي — اطلب ببساطة</title>
   <meta name="theme-color" content="#d40000">
-  <link rel="icon" type="image/x-icon" href="./favicon.ico">
-  <link rel="shortcut icon" href="./favicon.ico">
+   <link rel="shortcut icon" href="/favicon.ico">
+
+   <link rel="icon" type="image/x-icon" href="/favicon.ico">
+   <link rel="shortcut icon" href="/favicon.ico">
+   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+   <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
+   <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png">
+   <link rel="manifest" href="/site.webmanifest">
   <style>
     :root{
       --brand:#d40000; --brand-d:#b60000;
@@ -142,7 +148,7 @@
       .order-actions{
         width:100%;
         display:grid;
-        grid-template-columns:1.6fr 1.1fr auto; /* إرسال | عرض | مسح */
+        grid-template-columns:1.6fr 1.1fr auto;
       }
     }
     @media (min-width:760px){
@@ -152,7 +158,6 @@
       }
     }
 
-    /* أنيميشن بسيط يشد العين للشريط */
     .pulse{animation:barBounce .55s ease}
     @keyframes barBounce{
       0%{transform:translateY(12px);}
@@ -161,7 +166,6 @@
       100%{transform:translateY(0);}
     }
     canvas.confetti{position:fixed;inset:0;pointer-events:none;z-index:100}
-    /* === Cart drawer (preview) === */
     .cartbtn{background:#fff;color:#111;border:none;border-radius:10px;padding:10px 12px;font-weight:800;cursor:pointer}
     .drawer{position:fixed;inset-inline:auto 14px;bottom:76px;width:min(92vw,380px);max-height:50vh;overflow:hidden;
             background:#ffffff;border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);
@@ -169,7 +173,7 @@
     .drawer.show{transform:translateY(0);opacity:1;pointer-events:auto}
     .drawer h3{margin:10px 12px 0;font-size:16px}
     .cartlist{list-style:none;margin:6px 0 10px;padding:0;
-              max-height:calc(50vh - 44px); /* ارتفاع الصندوق - الهيدر */
+              max-height:calc(50vh - 44px);
               overflow-y:auto;}
     .cartlist li{display:flex;justify-content:space-between;gap:6px;padding:8px 12px;border-top:1px dashed var(--border)}
     .cartlist .meta{color:#70757d;font-size:12px}
@@ -179,7 +183,6 @@
     .drawer-header h3{margin:0;font-size:15px}
     .drawer-close{background:transparent;border:none;font-size:18px;font-weight:900;cursor:pointer;padding:0 4px;color:#111}
 
-    /* === Checkout modal === */
     .overlay{position:fixed;inset:0;background:rgba(0,0,0,.35);display:none;align-items:center;justify-content:center;z-index:80}
     .overlay.show{display:flex}
     .modal{width:min(92vw,520px);background:#fff;border-radius:18px;border:1px solid var(--border);box-shadow:var(--shadow);padding:14px}
@@ -190,10 +193,8 @@
     .mfoot .cancel{background:transparent;border:1px solid var(--border);border-radius:10px;padding:10px 12px;cursor:pointer}
     .mfoot .ok{background:var(--brand);color:#fff;border:none;border-radius:10px;padding:10px 12px;font-weight:800;cursor:pointer}
 
-    /* === حالة إخفاء عامة === */
     .hidden{display:none !important}
 
-    /* === عرض الأقسام الرئيسية (لحوم / دواجن / ... ) === */
     .cat-grid{
       display:grid;
       grid-template-columns:repeat(2, minmax(0,1fr));
@@ -201,7 +202,6 @@
       margin:18px 0;
     }
 
-    /* شوية responsive كده عشان الديسكتوب / التابلت */
     @media (min-width: 768px){
       .cat-grid{grid-template-columns:repeat(3, minmax(0,1fr));}
     }
@@ -219,12 +219,10 @@
     .filterBtn{flex:1;background:#111827;color:#fff;border:none;border-radius:12px;padding:8px 10px;font-weight:700;cursor:pointer;font-size:14px}
     .filterBtn span{margin-inline-start:6px}
 
-    /* === لمسة بسيطة على كمية الوزن والسلة === */
     .qty.is-weight{font-size:14px}
     .cartQty{display:flex;align-items:center;gap:4px;font-size:13px}
     .cartStep{width:26px;height:26px;border-radius:9px;border:1px solid var(--border);background:#fff;font-weight:900;cursor:pointer}
 
-    /* === تحسين شكل الموبايل (Mobile-first) === */
     @media (max-width: 768px){
       .hero-wrap{padding:14px 12px 8px}
       .hero h1{font-size:22px;line-height:1.4}
@@ -241,14 +239,11 @@
       .price{font-size:16px}
     }
 
-    /* لما يبقى في وضع المنتجات: الهيرو يبقى أرفع */
     body.products-mode .hero-wrap{padding:10px 12px 4px}
     body.products-mode .hero p,
     body.products-mode .chip{display:none}
   
-    /* === UI/UX v2 enhancements === */
 
-    /* Hero actions & badges */
     .hero-actions{
       display:flex;
       flex-wrap:wrap;
@@ -328,7 +323,6 @@
       margin-bottom:2px;
     }
 
-    /* Trust block */
     .trust{
       margin:30px 0 90px;
     }
@@ -390,7 +384,6 @@
       background:#fff8f8;
     }
 
-    /* Orderbar richer layout */
     .order-info{
       display:flex;
       flex-direction:column;
@@ -424,7 +417,6 @@
       opacity:.9;
     }
 
-    /* Clamp descriptions & meta */
     .desc{
       color:var(--muted);
       font-size:13px;
@@ -450,7 +442,6 @@
 
     .logo-badge {position: absolute;width:20%; top:20px;left:20px;z-index: 9999;}
 
-    /* Stronger cards + cats hover & mobile scroller */
     .card{
       transition:transform .18s ease, box-shadow .18s ease;
       position: relative;
@@ -487,7 +478,6 @@
       }
     }
 
-    /* Reveal-on-scroll animation */
     .reveal{
       opacity:0;
       transform:translateY(12px);
@@ -498,7 +488,6 @@
       transform:translateY(0);
     }
 
-    /* Hero pattern + CTA gentle motion */
     .pattern{
       animation:heroFloat 18s ease-in-out infinite alternate;
     }
@@ -513,7 +502,6 @@
       90%{transform:translateY(0) scale(1.005);}
     }
 
-    /* WhatsApp button in header */
     #wa.btn{
       background:#22c55e;
       color:#ffffff;
@@ -586,10 +574,8 @@
   </section>
 
   <div class="wrap">
-    <!-- شاشة الأقسام الرئيسية -->
     <div id="catsView" class="cat-grid"></div>
 
-    <!-- شاشة المنتجات -->
     <div id="productsView" class="hidden">
       <div class="topRow">
         <button id="backCats" class="backBtn">⬅ كل الأصناف</button>
@@ -599,7 +585,7 @@
       </div>
 
       <div id="filtersPanel" class="toolbar hidden" role="region" aria-label="أدوات البحث">
-        <input id="q" class="search" type="search" placeholder="اكتب اسم الحاجة هنا...">
+        <input id="q" class="search" type="search" placeholder="اكتبي اسم الحاجة هنا...">
         <select id="cat" class="select"><option value="">كل التصنيفات</option></select>
         <select id="brand" class="select"><option value="">كل الشركات</option></select>
         <input id="min" class="input" type="number" inputmode="numeric" placeholder="أقل سعر">
@@ -635,7 +621,6 @@
 
   <canvas class="confetti" id="confetti" width="0" height="0"></canvas>
 
-  <!-- === Drawer preview === -->
   <aside id="drawer" class="drawer" aria-live="polite">
     <div class="drawer-header">
       <h3>اختياراتك</h3>
@@ -644,7 +629,6 @@
     <ul id="cartList" class="cartlist"></ul>
   </aside>
 
-  <!-- === Checkout modal === -->
   <div id="overlay" class="overlay" role="dialog" aria-modal="true">
     <div class="modal pop">
       <h3>بيانات التواصل والتسليم</h3>
@@ -701,12 +685,12 @@
     const ASSETS = {
       LOGO_URL: "./logo.jpg",
       PATTERN_URL: "./pattern.svg",
-      WHATSAPP_PHONE: "201551846461", // مثال: 201551846461
+      WHATSAPP_PHONE: "201551846461",
       CALL_PHONE: "01060682224"
     };
     //const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRBz_5SuMZ0KwWDN5v_gLCo-RuRonyc0oW__QkWeTQPUjP-AG1vZVt_FHF9_trMYxIT6LdE-765_aV8/pub?gid=372316673&single=true&output=csv";
 
-    let CURRENT_CATEGORY = ""; // القسم اللي العميل واقف فيه
+    let CURRENT_CATEGORY = "";
 
     const el = id => document.getElementById(id);
     const unique = a => [...new Set(a)].filter(Boolean);
@@ -714,8 +698,8 @@
     function formatPrice(n){ if(n==null||isNaN(n)) return ""; return new Intl.NumberFormat('ar-EG',{maximumFractionDigits:2}).format(n)+" ج.م" }
     function escapeHtml(s){ return (s ?? "").replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m])) }
     const hasOffer = p => p.sale_price && p.price && p.sale_price < p.price;
-    const isByWeight = p => parseBool(p.by_weight); // TRUE = بالوزن
-    const stepFor   = p => isByWeight(p) ? 0.25 : 1; // ربع كيلو لكل ضغطة تقريباً
+    const isByWeight = p => parseBool(p.by_weight);
+    const stepFor   = p => isByWeight(p) ? 0.25 : 1;
 
     function csvToObjects(csv){
       const rows=[]; let field="",row=[],q=false;
@@ -727,7 +711,6 @@
         .filter(r=>r.some(x=>(x||"").trim()!==""))
         .map((r,idx)=>{
           const o={}; headers.forEach((h,i)=>o[h]=(r[i]??"").trim());
-          // uid داخلي فريد لكل منتج (حتى لو id فاضي أو مكرر)
           const keySource = (
             o.id ||
             o.sku ||
@@ -739,24 +722,22 @@
 
           o.price=o.price?Number(o.price):null; o.sale_price=o.sale_price?Number(o.sale_price):null;
           const rawInStock = o.in_stock;
-          // لو الخانة فاضية أو العمود مش موجود → اعتبره متوفر افتراضيًا
           o.in_stock = (rawInStock == null || rawInStock === "") ? true : parseBool(rawInStock);
           o.is_new=parseBool(o.is_new); o.is_featured=parseBool(o.is_featured);
-          o.by_weight=parseBool(o.by_weight); // TRUE لو الصنف بيتباع بالوزن (كيلو/جرام)
+          o.by_weight=parseBool(o.by_weight);
           o.tags=(o.tags||"").split("|").map(s=>s.trim()).filter(Boolean);
           return o;
       })
     }
 
-    // Identity
     document.getElementById("logo").src = ASSETS.LOGO_URL;
     document.documentElement.style.setProperty("--pattern-url", `url('${ASSETS.PATTERN_URL}')`);
     document.getElementById("tel").href = `tel:${ASSETS.CALL_PHONE}`;
     document.getElementById("wa").href = `https://wa.me/${ASSETS.WHATSAPP_PHONE}`;
 
-     // Selection
+
     const SEL = new Map();
-    const keyFor = (p) => p._uid || p.id || p.name; // مفتاح داخلي للسلة
+    const keyFor = (p) => p._uid || p.id || p.name;
 
     function addItem(p){
       const key  = keyFor(p);
@@ -790,11 +771,10 @@
       const ob = el("orderbar");
       if(!ob) return;
       ob.classList.remove("pulse");
-      void ob.offsetWidth; // restart animation
+      void ob.offsetWidth;
       ob.classList.add("pulse");
     }
 
-     // تشغيل أنيميشن خفيفة كل شوية عشان تفكر العميل بالسلة
     function ensureBarBounce(count){
       const bar = el("orderbar");
       if(!bar) return;
@@ -802,7 +782,7 @@
         if(!barBounceTimer){
           barBounceTimer = setInterval(()=>{
             if(SEL.size>0){ bounceBar(); }
-          }, 2000); // كل ~7 ثواني
+          }, 2000);
         }
       }else{
         if(barBounceTimer){
@@ -821,13 +801,12 @@
         bar.style.display="flex";
         el("orderCount").textContent=`${count} صنف`;
         el("orderTotal").textContent=`الإجمالي: ${formatPrice(total)}`;
-        if(count !== lastCount){ bounceBar(); } // bounce بسيط كل ما العدد يتغير
+        if(count !== lastCount){ bounceBar(); }
       }else{
         bar.style.display="none";
       }
       lastCount = count;
       ensureBarBounce(count);
-      // تحديث أزرار + / - في كروت المنتجات
       document.querySelectorAll(".card[data-id]").forEach(card=>{
         const id=card.getAttribute("data-id");
         const state=SEL.get(id);
@@ -839,7 +818,6 @@
           addBtn.style.display="none";
           stepper.classList.add("show");
           let label = state.qty;
-          // لو عندك دعم "بالوزن" هيبان هنا بكجم، وإلا هيشتغل كعدد عادي
           if(typeof isByWeight === "function" && isByWeight(state.p)){
             label = state.qty.toLocaleString('ar-EG',{maximumFractionDigits:2}) + " كجم";
           }
@@ -852,11 +830,10 @@
       });
 
       if(typeof renderDrawer === "function"){
-        renderDrawer(); // دا اللي بيخلّي الصندوق يتحدّث مع كل تغيير
+        renderDrawer();
       }
     }
 
-    // كونفيتي مستطيلات خفيفة بدل دواير تقيلة
     function confetti(){
       const c = el("confetti"), ctx = c.getContext("2d");
       c.width = innerWidth; c.height = innerHeight;
@@ -896,34 +873,20 @@
       el("brand").innerHTML='<option value="">كل الشركات</option>'+unique(items.map(i=>i.company)).map(b=>`<option>${escapeHtml(b)}</option>`).join("");
     }
 
-    // اختيار إيموجي حسب اسم الفئة بالعربي
     function emojiForCat(name){
       const n = (name || "").toString().toLowerCase();
-      // لحوم
       if(n.includes("لحم") || n.includes("لحوم") || n.includes("كندوز") || n.includes("برازيلي")) return "🥩";
-      // دواجن
       if(n.includes("دواجن") || n.includes("فراخ") || n.includes("دجاج")) return "🍗";
-      // أسماك / جمبري
       if(n.includes("سمك") || n.includes("أسماك") || n.includes("بحري") || n.includes("جمبري")) return "🐟";
-      // خضار
       if(n.includes("خضار") || n.includes("خضروات")) return "🥦";
-      // زيوت / سمنة
       if(n.includes("زيت") || n.includes("زيوت") || n.includes("سمن")) return "🫙";
-      // مكرونة
       if(n.includes("مكرونة") || n.includes("مكرونات") || n.includes("معكرونة")) return "🍝";
-      // صلصة / صوص
       if(n.includes("صلصة") || n.includes("صوص") || n.includes("كاتشب") || n.includes("طماطم")) return "🍅";
-      // عسل
       if(n.includes("عسل")) return "🍯";
-      // بيض
       if(n.includes("بيض")) return "🥚";
-      // أجبان
       if(n.includes("جبن") || n.includes("جبنة")) return "🧀";
-      // مجمدات عامة
       if(n.includes("مجمدات") || n.includes("فروزن")) return "❄️";
-      // أصناف أخرى / منوعات
       if(n.includes("أصناف") || n.includes("منوع") || n.includes("اخرى") || n.includes("أخرى")) return "🧺";
-      // أي فئة مش معروفة
       return "🛒";
     }
 
@@ -950,12 +913,12 @@
     function showProductsView(){
       el("catsView").classList.add("hidden");
       el("productsView").classList.remove("hidden");
-      document.body.classList.add("products-mode");   // الهيرو يبقى أرفع
+      document.body.classList.add("products-mode");
     }
     function showCatsView(){
       el("productsView").classList.add("hidden");
       el("catsView").classList.remove("hidden");
-      document.body.classList.remove("products-mode"); // نرجعه كامل تاني
+      document.body.classList.remove("products-mode");
     }
 
    
@@ -1068,18 +1031,17 @@
         }
       });
 
-      // تأكيد إن الأنيميشن شغالة على العناصر الجديدة
+
       if(typeof setupRevealAnimations === "function"){
         setupRevealAnimations();
       }
 
-      // مزامنة الشريط والسلة بعد إعادة الرسم
+
       if(typeof updateUI === "function"){
         updateUI();
       }
     }
 
-    // نفس لوجيك الفلترة من النسخة الأصلية
 function applyFilters(all){
   const q      = el("q").value.toLowerCase().trim();
   const cat    = el("cat").value;
@@ -1099,7 +1061,7 @@ function applyFilters(all){
     if(min && price < min) return false;
     if(max && price > max) return false;
 
-    // tags عندنا أحيانًا بتبقى Array وأحيانًا String
+
     const tagsStr = Array.isArray(p.tags) ? p.tags.join(" ") : (p.tags || "");
     const hay = (
       (p.name || "") + " " +
@@ -1145,7 +1107,7 @@ function buildOrderId(){
       }
       return { text: lines.join("\n"), orderId };
     }
-     // Drawer preview
+
     const drawer = el("drawer");
      function renderDrawer(){
       const list = el("cartList");
@@ -1171,7 +1133,7 @@ function buildOrderId(){
         list.appendChild(li);
       }
 
-      // ربط أزرار + / - جوّه الصندوق نفسه
+
       list.querySelectorAll(".cartStep").forEach(btn=>{
         const act = btn.getAttribute("data-act");
         const id  = btn.getAttribute("data-id");
@@ -1183,7 +1145,7 @@ function buildOrderId(){
     el("toggleDrawer").addEventListener("click", ()=> drawer.classList.toggle("show"));
     el("closeDrawer").addEventListener("click", ()=> drawer.classList.remove("show"));
 
-    // Modal flow
+    
     const overlay = el("overlay");
     el("sendWA").addEventListener("click", ()=>{
       if(SEL.size===0) return;
@@ -1249,7 +1211,7 @@ function buildOrderId(){
 
 async function boot(){
   try{
-    // البيانات جاية من data/products.js
+    
     const items = (window.__ALL__ || []).slice();
     if(!items.length){
       console.error("مفيش بيانات منتجات في window.__ALL__ – تأكد إن GitHub Action اشتغلت.");
