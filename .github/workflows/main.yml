@@ -1,0 +1,39 @@
+name: Update products from Google Sheets
+
+on:
+  # تشغّله يدويًا من تبويب "Actions"
+  workflow_dispatch: {}
+  # (اختياري) مرة كل يوم الساعة 6 صباحًا بتوقيت UTC
+  schedule:
+    - cron: "0 6 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Build data/products.js from Google Sheets
+        run: node scripts/build-products.js
+
+      - name: Commit & push if changed
+        run: |
+          if [[ -n "$(git status --porcelain)" ]]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data/products.js
+            git commit -m "chore: update products from Google Sheets"
+            git push
+          else
+            echo "No changes to commit"
+          fi
