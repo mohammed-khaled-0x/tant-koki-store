@@ -694,7 +694,7 @@
       </div>
     </div>
   </section>
-
+  <script src="./data/products.js"></script>
   <script>
     const ASSETS = {
       LOGO_URL: "./logo.jpg",
@@ -702,7 +702,7 @@
       WHATSAPP_PHONE: "201551846461", // مثال: 201551846461
       CALL_PHONE: "01060682224"
     };
-     const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRBz_5SuMZ0KwWDN5v_gLCo-RuRonyc0oW__QkWeTQPUjP-AG1vZVt_FHF9_trMYxIT6LdE-765_aV8/pub?gid=372316673&single=true&output=csv";
+    //const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRBz_5SuMZ0KwWDN5v_gLCo-RuRonyc0oW__QkWeTQPUjP-AG1vZVt_FHF9_trMYxIT6LdE-765_aV8/pub?gid=372316673&single=true&output=csv";
 
     let CURRENT_CATEGORY = ""; // القسم اللي العميل واقف فيه
 
@@ -956,10 +956,7 @@
       document.body.classList.remove("products-mode"); // نرجعه كامل تاني
     }
 
-    const SAMPLE_CSV = `id,name,category,company,unit,price,sale_price,in_stock,image_url,description,tags,weight_g,sku,barcode,is_featured,is_new,updated_at
-1001,كبدة بلدي,لحوم طازجة,بلدي,كجم,380,,TRUE,,طازجة يوميًا,"كبدة|بلدي",1000,KBD-01,,TRUE,TRUE,2025-11-05
-1002,لحمة مفرومة ممتاز,لحوم طازجة,مفروم,كجم,420,390,TRUE,,مفرومة جاهزة,"مفروم|لحمة",1000,LMF-02,,TRUE,FALSE,2025-11-04
-1003,بانيه فراخ,دواجن,شركات,كجم,230,199,TRUE,,صدور متبلة,"فراخ|بانيه|عرض",1000,BAN-33,,FALSE,TRUE,2025-11-06`;
+   
 
     
     
@@ -1203,13 +1200,6 @@ function buildOrderId(){
     });
     el("clearSel").addEventListener("click", ()=>{ SEL.clear(); updateUI() });
 
-    async function fetchCSVText(url){
-      const useSample = !url || url.includes("PLACEHOLDER");
-      if(useSample){ await new Promise(r=>setTimeout(r,60)); return SAMPLE_CSV; }
-      const res = await fetch(url, { cache:"no-store" });
-      if(!res.ok) throw new Error("تعذر تحميل CSV");
-      return await res.text();
-    }
     
     function setupHeroActions(){
       const heroStart = document.getElementById("heroStart");
@@ -1256,36 +1246,44 @@ function buildOrderId(){
     }
 
 async function boot(){
-      try{
-        const csv=await fetchCSVText(CSV_URL);
-        const items=csvToObjects(csv);
-        window.__ALL__=items;
-
-        ["q","cat","brand","min","max","offersOnly","onlyAvailable"].forEach(id=> el(id).addEventListener("input", ()=>applyFilters(window.__ALL__)));
-        el("reload").addEventListener("click", ()=>applyFilters(window.__ALL__));
-
-        // أول ما الصفحة تفتح → أقسام بس
-        buildFilters(items);
-        buildCats(items);
-        showCatsView();
-
-        setupHeroActions();
-        setupRevealAnimations();
-
-        // زر الرجوع للأقسام
-        el("backCats").addEventListener("click", ()=>{
-          CURRENT_CATEGORY = "";
-          el("cat").value = "";
-          showCatsView();
-        });
-
-        // زر إظهار/إخفاء الفلاتر
-        const filtersPanel = el("filtersPanel");
-        el("filtersBtn").addEventListener("click", ()=>{
-          filtersPanel.classList.toggle("hidden");
-        });
-      }catch(e){ console.error(e); el("grid").innerHTML="<div class='empty'>حصل خطأ في التحميل</div>" }
+  try{
+    // البيانات جاية من data/products.js
+    const items = (window.__ALL__ || []).slice();
+    if(!items.length){
+      console.error("مفيش بيانات منتجات في window.__ALL__ – تأكد إن GitHub Action اشتغلت.");
+      el("grid").innerHTML="<div class='empty'>مفيش بيانات منتجات متاحة حالياً.</div>";
+      return;
     }
+
+    window.__ALL__ = items;
+
+    ["q","cat","brand","min","max","offersOnly","onlyAvailable"].forEach(id=>{
+      el(id).addEventListener("input", ()=>applyFilters(window.__ALL__));
+    });
+    el("reload").addEventListener("click", ()=>applyFilters(window.__ALL__));
+
+    buildFilters(items);
+    buildCats(items);
+    showCatsView();
+
+    setupHeroActions();
+    setupRevealAnimations();
+
+    el("backCats").addEventListener("click", ()=>{
+      CURRENT_CATEGORY = "";
+      el("cat").value = "";
+      showCatsView();
+    });
+
+    const filtersPanel = el("filtersPanel");
+    el("filtersBtn").addEventListener("click", ()=>{
+      filtersPanel.classList.toggle("hidden");
+    });
+  }catch(e){
+    console.error(e);
+    el("grid").innerHTML="<div class='empty'>حصل خطأ في تحميل المنتجات</div>";
+  }
+}
     document.documentElement.style.setProperty("--pattern-url", `url('${ASSETS.PATTERN_URL}')`);
     boot();
   </script>
