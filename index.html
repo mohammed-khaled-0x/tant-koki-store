@@ -13,7 +13,8 @@
    <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
    <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png">
    <link rel="manifest" href="/site.webmanifest">
-  <link rel="preload" href="fonts/Cairo-800.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/Cairo-800.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="./pattern.svg" as="image" fetchpriority="high">
   <style>
     @font-face {
       font-family: 'Cairo';
@@ -565,14 +566,23 @@
       opacity:.9;
       white-space:nowrap;
     }
+
+    #catsView{
+      min-height: 260px;
+    }
+    
+    #grid{
+      min-height: 360px;
+    }
 </style>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ 
 </head>
 <body>
   <header class="topbar">
     <div class="topbar-inner">
-      <div class="logo"><img id="logo" alt="شعار طنط كوكي" loading="lazy" width="46" height="46"nk href="https://fonts.googleapis.com/css></div>
+      <div class="logo">
+        <img id="logo" alt="شعار طنط كوكي" loading="lazy" width="46" height="46">
+      </div>
       <div class="brand">طنط كوكي — اللحوم والمجمدات</div>
       <div class="spacer"></div>
       <a id="tel" class="btn ghost" href="#">اتصال</a>
@@ -730,10 +740,10 @@
       </div>
     </div>
   </section>
-  <script src="./data/products.js"></script>
+  <script src="./data/products.js" defer></script>
   <script>
     const ASSETS = {
-      LOGO_URL: "./logo.png",
+      LOGO_URL: "./logo.webp",
       PATTERN_URL: "./pattern.svg",
       WHATSAPP_PHONE: "201551846461",
       CALL_PHONE: "01060682224"
@@ -1298,8 +1308,10 @@ async function boot(){
     el("grid").innerHTML="<div class='empty'>حصل خطأ في تحميل المنتجات</div>";
   }
 }
-    document.documentElement.style.setProperty("--pattern-url", `url('${ASSETS.PATTERN_URL}')`);
-    boot();
+    window.addEventListener('DOMContentLoaded', function () {
+      document.documentElement.style.setProperty("--pattern-url", `url('${ASSETS.PATTERN_URL}')`);
+      boot();
+    });
   </script>
 </body>
 </html>
