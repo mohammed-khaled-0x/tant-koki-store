@@ -6,7 +6,6 @@
   <title>طنط كوكي — اطلبي ببساطة</title>
   <meta name="description" content="طنط كوكي بتقدم لحوم ودواجن ومجمدات وكل الي بيتك يحتاج له بجودة عالية وتوصيل لحد باب البيت.">
   <meta name="theme-color" content="#d40000">
-   <link rel="shortcut icon" href="/favicon.ico">
 
    <link rel="icon" type="image/x-icon" href="/favicon.ico">
    <link rel="shortcut icon" href="/favicon.ico">
@@ -222,7 +221,7 @@
             background:#ffffff;border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);
             transform:translateY(12px);opacity:0;pointer-events:none;transition:.18s ease;z-index:60}
     .drawer.show{transform:translateY(0);opacity:1;pointer-events:auto}
-    .drawer h3{margin:10px 12px 0;font-size:16px}
+    .drawer h2, .drawer h3{margin:10px 12px 0;font-size:16px}
     .cartlist{list-style:none;margin:6px 0 10px;padding:0;
               max-height:calc(50vh - 44px);
               overflow-y:auto;}
@@ -231,7 +230,7 @@
     .cartlist .qty{font-weight:900}
 
     .drawer-header{display:flex;align-items:center;justify-content:space-between;padding:8px 12px 4px}
-    .drawer-header h3{margin:0;font-size:15px}
+    .drawer-header h2, .drawer-header h3{margin:0;font-size:15px}
     .drawer-close{background:transparent;border:none;font-size:18px;font-weight:900;cursor:pointer;padding:0 4px;color:#111}
 
     .overlay{position:fixed;inset:0;background:rgba(0,0,0,.35);display:none;align-items:center;justify-content:center;z-index:80}
@@ -793,7 +792,6 @@
     }
 
     document.getElementById("logo").src = ASSETS.LOGO_URL;
-    document.documentElement.style.setProperty("--pattern-url", `url('${ASSETS.PATTERN_URL}')`);
     document.getElementById("tel").href = `tel:${ASSETS.CALL_PHONE}`;
     document.getElementById("wa").href = `https://wa.me/${ASSETS.WHATSAPP_PHONE}`;
 
@@ -1159,7 +1157,8 @@ function buildOrderId(){
         const qtyLabel = isByWeight(p)
           ? `${qty.toLocaleString('ar-EG',{maximumFractionDigits:2})} كجم`
           : `${qty} قطعة`;
-        lines.push(`• ${qtyLabel} من ${p.name} ${p.unit?`(${p.unit})`:""} — ${per} = ${sub} ج.م`);
+        lines.push(`• ${qtyLabel} من ${p.name} ${p.unit ? '(' + p.unit + ')' : ''} — ${per} = ${sub} ج.م`);
+
       }
       lines.push(`الإجمالي: ${total} ج.م`); lines.push(`شكراً لك ❤️`);
       if(meta){
