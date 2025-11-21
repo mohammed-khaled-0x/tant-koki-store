@@ -13,7 +13,40 @@
    <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
    <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png">
    <link rel="manifest" href="/site.webmanifest">
+  <link rel="preload" href="fonts/Cairo-800.woff2" as="font" type="font/woff2" crossorigin>
   <style>
+    @font-face {
+      font-family: 'Cairo';
+      src: url('assets/fonts/Cairo-600.woff2') format('woff2');
+      font-weight: 600;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Cairo';
+      src: url('assets/fonts/Cairo-700.woff2') format('woff2');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Cairo';
+      src: url('assets/fonts/Cairo-800.woff2') format('woff2');
+      font-weight: 800;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Cairo';
+      src: url('assets/fonts/Cairo-900.woff2') format('woff2');
+      font-weight: 900;
+      font-style: normal;
+      font-display: swap;
+    }
+
     :root{
       --brand:#d40000; --brand-d:#b60000;
       --ink:#0b0f19; --bg:#fff7f7; --plate:#0d0d0f;
