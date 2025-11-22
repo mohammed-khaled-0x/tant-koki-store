@@ -938,14 +938,17 @@
       if(n.includes("دواجن") || n.includes("فراخ") || n.includes("دجاج")) return "🍗";
       if(n.includes("سمك") || n.includes("أسماك") || n.includes("بحري") || n.includes("جمبري")) return "🐟";
       if(n.includes("خضار") || n.includes("خضروات")) return "🥦";
-      if(n.includes("زيت") || n.includes("زيوت") || n.includes("سمن")) return "🫙";
+      if(n.includes("زيت") || n.includes("زيوت") || n.includes("سمن")) return "🧈";
       if(n.includes("مكرونة") || n.includes("مكرونات") || n.includes("معكرونة")) return "🍝";
-      if(n.includes("صلصة") || n.includes("صوص") || n.includes("كاتشب") || n.includes("طماطم")) return "🍅";
+      if(n.includes("صلصة") || n.includes("كاتشب") || n.includes("طماطم")) return "🍅";
       if(n.includes("عسل")) return "🍯";
       if(n.includes("بيض")) return "🥚";
+      if(n.includes("رقاق و جلاش")) return "🥟";
+      if(n.includes("طنط كوكي")) return "طنط كوكي";
+      if(n.includes("صوصات") || n.includes("صوص")) return "🧴";
       if(n.includes("جبن") || n.includes("جبنة")) return "🧀";
       if(n.includes("مجمدات") || n.includes("فروزن")) return "❄️";
-      if(n.includes("أصناف") || n.includes("منوع") || n.includes("اخرى") || n.includes("أخرى")) return "🧺";
+      if(n.includes("أصناف") || n.includes("منوع") || n.includes("اخرى") || n.includes("أخرى")) return "📦";
       return "🛒";
     }
 
@@ -954,6 +957,12 @@
       const holder = el("catsView");
       holder.innerHTML = cats.map((c)=>{
         const emoji = emojiForCat(c);
+        if(emoji == 'طنط كوكي') {
+          return `<button class="cat-card" data-reveal data-cat="${escapeHtml(c)}">
+                  <div class="cat-emoji"><img src="./logo.webp" ></div>
+                  <div class="cat-title">${escapeHtml(c)}</div>
+                </button>`;
+        }
         return `<button class="cat-card" data-reveal data-cat="${escapeHtml(c)}">
                   <div class="cat-emoji">${emoji}</div>
                   <div class="cat-title">${escapeHtml(c)}</div>
