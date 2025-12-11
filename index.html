@@ -573,6 +573,90 @@
     #grid{
       min-height: 360px;
     }
+
+    .install-hint{
+      position:fixed;
+      inset-inline:14px;
+      bottom:82px;
+      background:#ffffff;
+      border-radius:18px;
+      border:1px solid var(--border);
+      box-shadow:var(--shadow);
+      padding:10px 12px;
+      display:flex;
+      align-items:flex-start;
+      gap:8px;
+      z-index:70;
+      transform:translateY(16px);
+      opacity:0;
+      pointer-events:none;
+      transition:transform .2s ease, opacity .2s ease;
+      font-size:13px;
+    }
+    .install-hint.show{
+      transform:translateY(0);
+      opacity:1;
+      pointer-events:auto;
+    }
+    .install-icon{
+      width:32px;
+      height:32px;
+      border-radius:999px;
+      background:#fff2f2;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:18px;
+    }
+    .install-body{
+      flex:1;
+      min-width:0;
+    }
+    .install-title{
+      font-weight:800;
+      margin-bottom:2px;
+    }
+    .install-text{
+      color:var(--muted);
+      font-size:12px;
+    }
+    .install-actions{
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+      margin-inline-start:4px;
+    }
+    .install-primary{
+      border:none;
+      border-radius:999px;
+      padding:7px 10px;
+      font-size:12px;
+      font-weight:800;
+      cursor:pointer;
+      background:var(--brand);
+      color:#fff;
+      white-space:nowrap;
+    }
+    .install-secondary{
+      border:none;
+      background:transparent;
+      color:var(--muted);
+      font-size:11px;
+      cursor:pointer;
+      text-decoration:underline;
+      white-space:nowrap;
+    }
+    @media (max-width:720px){
+      .install-hint{
+        inset-inline:10px;
+        bottom:78px;
+        font-size:12px;
+      }
+      .install-actions{
+        flex-direction:row;
+        align-items:center;
+      }
+    }
 </style>
  
 </head>
@@ -719,6 +803,20 @@
     </div>
   </div>
 
+  <div id="installHint" class="install-hint" aria-hidden="true">
+    <div class="install-icon">📲</div>
+    <div class="install-body">
+      <div class="install-title">ثبّتي طنط كوكي على موبايلك؟</div>
+      <div class="install-text">
+        يبقى عندك زرار واحد تفتحي منه الطلبات بسرعة، من غير تسجيل ولا تعقيد.
+      </div>
+    </div>
+    <div class="install-actions">
+      <button id="installNow" class="install-primary">يلا بينا</button>
+      <button id="installLater" class="install-secondary">مش دلوقتي</button>
+    </div>
+  </div>
+
   <section class="trust">
     <div class="wrap trust-wrap">
       <h2 class="trust-title" data-reveal>ليه طنط كوكي؟</h2>
@@ -764,8 +862,11 @@
     //const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRBz_5SuMZ0KwWDN5v_gLCo-RuRonyc0oW__QkWeTQPUjP-AG1vZVt_FHF9_trMYxIT6LdE-765_aV8/pub?gid=372316673&single=true&output=csv";
 
     let CURRENT_CATEGORY = "";
-    let hasHistoryGuard = false;  
-    let exitConfirmed  = false;   
+    let hasHistoryGuard = false; 
+    let exitConfirmed  = false;
+
+    let deferredInstallPrompt = null;
+    const INSTALL_DISMISS_KEY = "tkk_install_prompt_dismissed_v1";  
 
     const el = id => document.getElementById(id);
     const unique = a => [...new Set(a)].filter(Boolean);
@@ -1379,6 +1480,111 @@ function buildOrderId(){
       });
     }
 
+    function isStandalone(){
+      const mq = window.matchMedia && window.matchMedia("(display-mode: standalone)").matches;
+      const iosStandalone = window.navigator.standalone === true;
+      return mq || iosStandalone;
+    }
+
+    function isIOS(){
+      return /iphone|ipad|ipod/i.test(window.navigator.userAgent || "");
+    }
+
+    function shouldShowInstallHint(){
+      if(typeof localStorage === "undefined") return true;
+      return localStorage.getItem(INSTALL_DISMISS_KEY) !== "1";
+    }
+
+    function markInstallHintDismissed(){
+      try{
+        if(typeof localStorage !== "undefined"){
+          localStorage.setItem(INSTALL_DISMISS_KEY, "1");
+        }
+      }catch(e){}
+    }
+
+    function showInstallHint(){
+      const hint = el("installHint");
+      if(!hint) return;
+      hint.classList.add("show");
+      hint.setAttribute("aria-hidden","false");
+    }
+
+    function hideInstallHint(){
+      const hint = el("installHint");
+      if(!hint) return;
+      hint.classList.remove("show");
+      hint.setAttribute("aria-hidden","true");
+    }
+
+    function setupInstallPrompt(){
+      // لو أصلاً التطبيق متثبّت كـ PWA أو اليوزر رفض قبل كده → متظهرش
+      if(isStandalone() || !shouldShowInstallHint()){
+        return;
+      }
+
+      const installNow   = el("installNow");
+      const installLater = el("installLater");
+
+      // الإمساك بـ beforeinstallprompt في كروم/أندرويد
+      window.addEventListener("beforeinstallprompt", (e)=>{
+        e.preventDefault();
+        deferredInstallPrompt = e;
+
+        // ندي المستخدم ثانية أو اثنين بعد فتح الصفحة
+        setTimeout(()=> showInstallHint(), 1500);
+      });
+
+      // fallback لـ iOS: مفيش beforeinstallprompt
+      if(isIOS()){
+        // بعد ثانيتين من فتح الصفحة، لو لسه مش standalone نظهر التلميح
+        setTimeout(()=>{
+          if(!isStandalone() && shouldShowInstallHint()){
+            showInstallHint();
+          }
+        }, 2000);
+      }
+
+      if(installLater){
+        installLater.addEventListener("click", ()=>{
+          hideInstallHint();
+          markInstallHintDismissed();
+        });
+      }
+
+      if(installNow){
+        installNow.addEventListener("click", async ()=>{
+          // لو معانا beforeinstallprompt → كروم/أندرويد
+          if(deferredInstallPrompt){
+            hideInstallHint();
+            try{
+              deferredInstallPrompt.prompt();
+              const choice = await deferredInstallPrompt.userChoice;
+              if(choice.outcome === "accepted"){
+                markInstallHintDismissed();
+              }else{
+                // رفض التثبيت المرة دي → ما نزنش عليه تاني
+                markInstallHintDismissed();
+              }
+            }catch(e){
+              console.error(e);
+            }finally{
+              deferredInstallPrompt = null;
+            }
+          }else if(isIOS()){
+            // iOS: نشرحله يعمل Add to Home Screen
+            alert("عشان تثبّتي طنط كوكي على الشاشة الرئيسية:\n\nمن شريط الأدوات في Safari دوسي على زر المشاركة ▢⬆ ثم اختاري \"إضافة إلى الشاشة الرئيسية\".");
+            hideInstallHint();
+            markInstallHintDismissed();
+          }else{
+            // متصفح مش بيدعم التثبيت → نقفل بس ومش نرجع نزعجه
+            hideInstallHint();
+            markInstallHintDismissed();
+          }
+        });
+      }
+    }
+
 async function boot(){
   try{
     
@@ -1402,6 +1608,7 @@ async function boot(){
     initSPAHistory();
     setupHeroActions();
     setupRevealAnimations();
+    setupInstallPrompt();
 
     el("backCats").addEventListener("click", ()=>{
       if(hasHistoryGuard && window.history && history.back){
