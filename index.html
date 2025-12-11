@@ -238,7 +238,7 @@
     .modal h3{margin:0 0 10px}
     .formrow{display:grid;gap:8px;margin:8px 0}
     .formrow input,.formrow textarea{padding:10px 12px;border:1px solid var(--border);border-radius:12px;width:100%}
-    .mfoot{display:flex;gap:8px;justify-content:flex-end;margin-top:10px}
+    .mfoot{display:flex;gap:8px;justify-content:flex-start;margin-top:10px}
     .mfoot .cancel{background:transparent;border:1px solid var(--border);border-radius:10px;padding:10px 12px;cursor:pointer}
     .mfoot .ok{background:var(--brand);color:#fff;border:none;border-radius:10px;padding:10px 12px;font-weight:800;cursor:pointer}
 
@@ -706,6 +706,19 @@
     </div>
   </div>
 
+  <div id="exitOverlay" class="overlay" role="dialog" aria-modal="true" aria-labelledby="exitTitle">
+    <div class="modal">
+      <h3 id="exitTitle">هتمشي وتسيبي طنط كوكي؟</h3>
+      <p style="margin:0 0 10px;font-size:14px;color:var(--muted);">
+        لو لسه بتظبّطي طلب الطبخة أو العزومة، خليكي مع طنط كوكي شوية كمان 😋
+      </p>
+      <div class="mfoot">
+        <button class="cancel" id="stayOnSite">لا، كملّي تصفح</button>
+        <button class="ok" id="exitSite">أيوه، اقفل الصفحة</button>
+      </div>
+    </div>
+  </div>
+
   <section class="trust">
     <div class="wrap trust-wrap">
       <h2 class="trust-title" data-reveal>ليه طنط كوكي؟</h2>
@@ -751,6 +764,8 @@
     //const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRBz_5SuMZ0KwWDN5v_gLCo-RuRonyc0oW__QkWeTQPUjP-AG1vZVt_FHF9_trMYxIT6LdE-765_aV8/pub?gid=372316673&single=true&output=csv";
 
     let CURRENT_CATEGORY = "";
+    let hasHistoryGuard = false;  
+    let exitConfirmed  = false;   
 
     const el = id => document.getElementById(id);
     const unique = a => [...new Set(a)].filter(Boolean);
@@ -974,6 +989,13 @@
           el("cat").value = CURRENT_CATEGORY;
           showProductsView();
           applyFilters(window.__ALL__ || []);
+          if(window.history && history.pushState){
+            history.pushState(
+              { screen: "category", cat: CURRENT_CATEGORY },
+              "",
+              ""
+            );
+          }
         });
       });
     }
@@ -990,7 +1012,65 @@
     }
 
    
+     function showExitConfirm(){
+      const eo = el("exitOverlay");
+      if(eo) eo.classList.add("show");
+    }
+    function hideExitConfirm(){
+      const eo = el("exitOverlay");
+      if(eo) eo.classList.remove("show");
+    }
 
+    
+    function handlePopState(event){
+      const state = event.state || {};
+
+
+      if(state.screen === "guard"){
+
+        if(exitConfirmed){
+          exitConfirmed = false;
+
+          setTimeout(()=> history.back(), 0);
+          return;
+        }
+
+
+        showExitConfirm();
+        history.pushState({ screen: "home" }, "", "");
+        return;
+      }
+
+
+      if(state.screen === "home"){
+        CURRENT_CATEGORY = "";
+        el("cat").value = "";
+        showCatsView();
+        return;
+      }
+
+
+      if(state.screen === "category"){
+        CURRENT_CATEGORY = state.cat || "";
+        el("cat").value = CURRENT_CATEGORY;
+        showProductsView();
+        applyFilters(window.__ALL__ || []);
+        return;
+      }
+    }
+
+    
+    function initSPAHistory(){
+      if(hasHistoryGuard || !window.history || !history.pushState) return;
+      hasHistoryGuard = true;
+
+
+      history.replaceState({ screen: "guard" }, "", "");
+
+      history.pushState({ screen: "home" }, "", "");
+
+      window.addEventListener("popstate", handlePopState);
+    }
     
     
     function render(items){
@@ -1216,6 +1296,9 @@ function buildOrderId(){
 
     
     const overlay = el("overlay");
+    const exitOverlay = el("exitOverlay");
+    const stayOnSite  = el("stayOnSite");
+    const exitSite    = el("exitSite");
     el("sendWA").addEventListener("click", ()=>{
       if(SEL.size===0) return;
       overlay.classList.add("show");
@@ -1231,6 +1314,24 @@ function buildOrderId(){
       overlay.classList.remove("show");
       window.location.href=url;
     });
+
+    if(stayOnSite){
+      stayOnSite.addEventListener("click", ()=>{
+        exitConfirmed = false;
+        hideExitConfirm();
+      });
+    }
+    if(exitSite){
+      exitSite.addEventListener("click", ()=>{
+        exitConfirmed = true;
+        hideExitConfirm();
+       
+        if(window.history && history.back){
+          history.back();
+        }
+      });
+    }
+
     el("clearSel").addEventListener("click", ()=>{ SEL.clear(); updateUI() });
 
     
@@ -1298,11 +1399,16 @@ async function boot(){
     buildFilters(items);
     buildCats(items);
     showCatsView();
-
+    initSPAHistory();
     setupHeroActions();
     setupRevealAnimations();
 
     el("backCats").addEventListener("click", ()=>{
+      if(hasHistoryGuard && window.history && history.back){
+        history.back();
+        return;
+      }
+
       CURRENT_CATEGORY = "";
       el("cat").value = "";
       showCatsView();
