@@ -1194,8 +1194,8 @@
         const emoji = emojiForCat(c);
         if(emoji == 'طنط كوكي') {
           return `<button class="cat-card" data-reveal data-cat="${escapeHtml(c)}">
-                  <div class="cat-emoji"><img style="height: 26px;" src="./logo.webp"></div>
-                  <div style="color: #d40000;" class="cat-title">${escapeHtml(c)}</div>
+                  
+                  <div style="color: #d40000;display: flex;justify-content: center;align-items: center;" class="cat-title">${escapeHtml(c)} <img style="height: 35px;margin-right:10px;" src="./logo.webp"></div>
                 </button>`;
         }
         return `<button class="cat-card" data-reveal data-cat="${escapeHtml(c)}">
