@@ -1,27 +1,6 @@
 // ⚠️ ملف متولّد تلقائياً من Google Sheets – لا تعدّل هنا يدويًا.
 window.__ALL__ = [
   {
-    "id": "5000",
-    "name": "اختبار",
-    "category": "بوكس",
-    "company": "عروض",
-    "unit": "كيلو",
-    "price": 150,
-    "sale_price": 100,
-    "in_stock": true,
-    "image_url": "",
-    "description": "",
-    "tags": [],
-    "weight_g": "",
-    "sku": "",
-    "barcode": "",
-    "is_featured": false,
-    "is_new": false,
-    "updated_at": "",
-    "by_weight": false,
-    "_uid": "5000"
-  },
-  {
     "id": "11",
     "name": "بطاطس جوده 2.5 كيلو",
     "category": "خضروات",
