@@ -579,11 +579,9 @@
       }
       .cat-grid{
         /* display:flex; */
-        overflow-x:auto;
-        gap:10px;
-        padding-bottom:6px;
-        margin-bottom:6px;
-        scroll-snap-type:x mandatory;
+        overflow: visible;
+        display: grid;
+        scroll-snap-type: none;
       }
       .cat-card{
         min-width:130px;
