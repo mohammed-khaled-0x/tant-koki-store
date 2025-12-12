@@ -84,6 +84,14 @@
     .btn:hover{background:#fff1f1; color: var(--brand)}
     .ghost{background:transparent;color:#fff;border:3px solid rgba(255,255,255,.6)}
 
+     @media (max-width: 600px){
+      .brand-desc { display: none; }
+      .brand { font-size: 18px; } 
+      .topbar-inner { gap: 6px; padding: 10px; }
+      .logo img { width: 40px; height: 40px; }
+      .btn { padding: 8px 10px; font-size: 13px; }
+    }
+
     .hero{background:radial-gradient(1200px 400px at 100% 0%, rgba(255,255,255,.16), transparent 60%), var(--brand);color:#fff;position:relative}
     .pattern{background-image: var(--pattern-url);background-repeat:repeat;background-size:280px auto;opacity:.3;position:absolute;inset:0;pointer-events:none}
     .hero-wrap{max-width:1200px;margin:0 auto;position:relative;padding:22px 14px 16px}
@@ -728,7 +736,9 @@
       <div class="logo">
         <img id="logo" alt="شعار طنط كوكي" loading="lazy" width="46" height="46">
       </div>
-      <div class="brand">طنط كوكي — اللحوم والمجمدات</div>
+      <div class="brand">
+        طنط كوكي <span class="brand-desc">— اللحوم والمجمدات</span>
+      </div>
       <div class="spacer"></div>
       <a id="tel" class="btn ghost" href="#">اتصال</a>
       <a id="wa" class="btn" target="_blank" rel="noopener">واتساب</a>
