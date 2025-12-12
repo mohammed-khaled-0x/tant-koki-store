@@ -3193,7 +3193,7 @@ window.__ALL__ = [
     "_uid": "19"
   },
   {
-    "id": "",
+    "id": "20",
     "name": "سوسيس طنط كوكي",
     "category": "طنط كوكي",
     "company": "طنط كوكي",
@@ -3211,6 +3211,27 @@ window.__ALL__ = [
     "is_new": false,
     "updated_at": "",
     "by_weight": false,
-    "_uid": "سوسيس طنط كوكي|كيلو"
+    "_uid": "20"
+  },
+  {
+    "id": "0",
+    "name": "اختبار",
+    "category": "عروض",
+    "company": "",
+    "unit": "",
+    "price": null,
+    "sale_price": null,
+    "in_stock": true,
+    "image_url": "",
+    "description": "",
+    "tags": [],
+    "weight_g": "",
+    "sku": "",
+    "barcode": "",
+    "is_featured": false,
+    "is_new": false,
+    "updated_at": "",
+    "by_weight": false,
+    "_uid": "0"
   }
 ];
