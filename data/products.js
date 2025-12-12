@@ -1,9 +1,9 @@
 // ⚠️ ملف متولّد تلقائياً من Google Sheets – لا تعدّل هنا يدويًا.
 window.__ALL__ = [
   {
-    "id": "0",
+    "id": "5000",
     "name": "اختبار",
-    "category": "عروض",
+    "category": "بوكس",
     "company": "عروض",
     "unit": "كيلو",
     "price": 150,
@@ -19,7 +19,7 @@ window.__ALL__ = [
     "is_new": false,
     "updated_at": "",
     "by_weight": false,
-    "_uid": "0"
+    "_uid": "5000"
   },
   {
     "id": "11",
