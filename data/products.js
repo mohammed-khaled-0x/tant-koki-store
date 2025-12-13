@@ -7,7 +7,7 @@ window.__ALL__ = [
     "company": "طنط كوكي",
     "unit": "قطعة",
     "price": 120,
-    "sale_price": 50,
+    "sale_price": null,
     "in_stock": true,
     "image_url": "./assets/img/120.webp",
     "description": "",
