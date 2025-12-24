@@ -1,5 +1,9 @@
 name: Update products from Google Sheets
 
+concurrency:
+  group: update-products
+  cancel-in-progress: true
+
 on:
   # تشغّله يدويًا من تبويب "Actions"
   workflow_dispatch: {}
