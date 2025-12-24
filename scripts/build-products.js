@@ -20,6 +20,7 @@ const toNumber = (v) => {
   return Number.isFinite(n) ? n : null;
 };
 
+function csvToObjects(csv) {
   const text = (csv ?? "").replace(/\r\n/g, "\n").replace(/\r/g, "\n");
   const rows = [];
   let row = [];
