@@ -1025,14 +1025,15 @@
       updateUI();
     }
     function getTotals(){
-      let count=0,total=0;
+      let qtyTotal = 0, total = 0;
       for(const {qty,p} of SEL.values()){
-        count+=qty;
-        const per=hasOffer(p)?p.sale_price:p.price;
-        total+=(per||0)*qty;
+        qtyTotal += qty;
+        const per = hasOffer(p) ? p.sale_price : p.price;
+        total += (per || 0) * qty;
       }
-      return {count,total};
+      return { itemsCount: SEL.size, qtyTotal, total };
     }
+
     let lastCount = 0;
     let barBounceTimer = null;
 
@@ -1063,19 +1064,19 @@
     }
 
     function updateUI(){
-      const {count,total}=getTotals();
+      const {itemsCount, qtyTotal, total} = getTotals();
       const bar=el("orderbar");
 
-      if(count>0){
+      if(itemsCount>0){
         bar.style.display="flex";
-        el("orderCount").textContent=`${count} صنف`;
+        el("orderCount").textContent=`${itemsCount} صنف`;
         el("orderTotal").textContent=`الإجمالي: ${formatPrice(total)}`;
-        if(count !== lastCount){ bounceBar(); }
+        if(itemsCount !== lastCount){ bounceBar(); }
       }else{
         bar.style.display="none";
       }
-      lastCount = count;
-      ensureBarBounce(count);
+      lastCount = itemsCount;
+      ensureBarBounce(itemsCount);
       document.querySelectorAll(".card[data-id]").forEach(card=>{
         const id=card.getAttribute("data-id");
         const state=SEL.get(id);
@@ -1094,7 +1095,9 @@
         }else{
           addBtn.style.display="block";
           stepper.classList.remove("show");
-          qtyEl.textContent = "1";
+          const baseStep = (typeof isByWeight === "function" && isByWeight(state?.p || {by_weight:false})) ? 0.25 : 1;
+          const isW = card.getAttribute("data-by-weight") === "1";
+          qtyEl.textContent = isW ? "0.25 كجم" : "1";
         }
       });
 
@@ -1280,7 +1283,6 @@
 
       if(state.screen === "home"){
         CURRENT_CATEGORY = "";
-        el("cat").value = "";
         showCatsView();
         return;
       }
@@ -1288,7 +1290,6 @@
 
       if(state.screen === "category"){
         CURRENT_CATEGORY = state.cat || "";
-        el("cat").value = CURRENT_CATEGORY;
         showProductsView();
         applyFilters(window.__ALL__ || []);
         return;
@@ -1313,6 +1314,8 @@
       const grid = el("grid"), empty = el("empty");
       if(!grid || !empty) return;
 
+      const byId = new Map(items.map(p => [p._uid, p]));
+      
       if(!items.length){
         grid.innerHTML = "";
         empty.style.display = "block";
@@ -1362,7 +1365,7 @@
 
         const disabled = (!p.in_stock) ? "disabled" : "";
 
-        return `<article class="card" data-reveal data-id="${escapeHtml(p._uid)}">
+        return `<article class="card" data-reveal data-id="${escapeHtml(p._uid)}" data-by-weight="${p.by_weight ? "1" : "0"}">
           <img src="./logo-badge.png" class="logo-badge" loading="lazy">
           <div class="plate">${badge}${img}</div>
           <div class="name">${escapeHtml(p.name||"")}</div>
@@ -1388,7 +1391,7 @@
 
       grid.querySelectorAll(".card").forEach(card=>{
         const id = card.getAttribute("data-id");
-        const p = (items || []).find(x => x._uid === id);
+        const p = byId.get(id);
         if(!p) return;
 
         const addBtn = card.querySelector(".add");
@@ -1477,7 +1480,9 @@ function buildOrderId(){
         const qtyLabel = isByWeight(p)
           ? `${qty.toLocaleString('ar-EG',{maximumFractionDigits:2})} كجم`
           : `${qty} قطعة`;
-        lines.push(`• ${qtyLabel} من ${p.name} ${p.unit ? '(' + p.unit + ')' : ''} — ${per} = ${sub} ج.م`);
+        const perTxt = per == null ? "—" : formatPrice(per);
+        const subTxt = formatPrice(sub);
+        lines.push(`• ${qtyLabel} من ${p.name} ${p.unit ? '(' + p.unit + ')' : ''} — ${perTxt} | ${subTxt}`);
 
       }
       lines.push(`الإجمالي: ${formatPrice(total)}`); lines.push(`شكراً لك ❤️`);
@@ -1504,11 +1509,11 @@ function buildOrderId(){
         li.innerHTML = `
           <div>
             <strong>${escapeHtml(p.name)}</strong>
-            <div class="meta">${escapeHtml(p.unit||"")} • ${per} ج.م</div>
+            <div class="meta">${escapeHtml(p.unit||"")} • ${per == null ? "—" : formatPrice(per)}</div>
           </div>
           <div class="cartQty">
             <button class="cartStep" data-act="dec" data-id="${p._uid}">-</button>
-            <span>${niceQty} = ${sub}</span>
+            <span>${niceQty} = ${formatPrice(sub)}</span>
             <button class="cartStep" data-act="inc" data-id="${p._uid}">+</button>
           </div>`;
         list.appendChild(li);
