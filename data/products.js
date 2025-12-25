@@ -36,7 +36,7 @@ window.__ALL__ = [
     "weight_g": "",
     "sku": "",
     "barcode": "",
-    "is_featured": false,
+    "is_featured": true,
     "is_new": false,
     "updated_at": "",
     "by_weight": false,
