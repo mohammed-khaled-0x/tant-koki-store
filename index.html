@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>طنط كوكي — اطلبي ببساطة</title>
+  <meta name="description" content="طنط كوكي بتقدم لحوم ودواجن ومجمدات وكل الي بيتك يحتاج له بجودة عالية وتوصيل لحد باب البيت.">
+  <meta name="theme-color" content="#d40000">
+
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="preload" href="/assets/fonts/Cairo-800.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/pattern.svg" as="image" fetchpriority="high">
+  <script type="module" crossorigin src="/assets/main-B4QlE1Mn.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/modulepreload-polyfill-B5Qt9EMX.js">
+  <link rel="stylesheet" crossorigin href="/assets/main-z9jQ0oMV.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="logo">
+        <img id="logo" alt="شعار طنط كوكي" loading="lazy" width="46" height="46">
+      </div>
+      <div class="brand">
+        طنط كوكي <span class="brand-desc">— اللحوم والمجمدات</span>
+      </div>
+      <div class="spacer"></div>
+      <a id="tel" class="btn ghost" href="#">اتصال</a>
+      <a id="wa" class="btn" target="_blank" rel="noopener">واتساب</a>
+    </div>
+  </header>
+<main id="main" role="main">
+  <section class="hero">
+    <div class="pattern" aria-hidden="true"></div>
+    <div class="hero-wrap" data-reveal>
+      <h1>طنط كوكي ,,, طبختك علينا.</h1>
+      <p>ببساطة: دوسي "أضف" – زوّدي أو قلّلي – وبعدها "إرسال واتساب".</p>
+      <span class="chip">لا سلة معقدة • لا تسجيل • كله سريع</span>
+      <div class="hero-actions">
+        <button class="btn hero-cta" id="heroStart">ابدأي الطلب دلوقتي</button>
+        <button class="btn ghost hero-secondary" id="quickHelp">مش فاضية ألف كتير؟</button>
+      </div>
+      <div class="hero-badges">
+        <span class="badge-pill">توصيل لأي مكان</span>
+        <span class="badge-pill">دفع عند الاستلام</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="steps-strip">
+    <div class="wrap steps-wrap">
+      <div class="steps-item" data-reveal>
+        <div class="steps-icon">١</div>
+        <div class="steps-text">
+          <strong>اختاري القسم</strong>
+          <span>لحوم، دواجن، أسماك أو مجمدات.</span>
+        </div>
+      </div>
+      <div class="steps-item" data-reveal>
+        <div class="steps-icon">٢</div>
+        <div class="steps-text">
+          <strong>زوّدي أو قلّلي الكمية</strong>
+          <span>كل ضغطة تزود أو تنقص الكمية بالكيلو أو بالقطعة.</span>
+        </div>
+      </div>
+      <div class="steps-item" data-reveal>
+        <div class="steps-icon">٣</div>
+        <div class="steps-text">
+          <strong>ابعتي الطلب على واتساب</strong>
+          <span>من غير تسجيل ولا بيانات معقدة، والدفع عند الاستلام.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <div id="catsView" class="cat-grid"></div>
+
+    <div id="productsView" class="hidden">
+      <div class="topRow">
+        <button id="backCats" class="backBtn">
+          <span>🔙</span>
+          <span>رجوع لكل الأقسام</span>
+        </button>
+      </div>
+
+      <div style="margin-bottom: 10px;">
+        <input id="q" class="search" type="search" placeholder="اكتبي اسم الحاجة هنا...">
+      </div>
+
+      <div id="tabsContainer" class="scroll-tabs">
+
+      </div>
+
+
+      <div id="quickFilters" class="quick-filters">
+        <button class="qf-btn" data-max="100">أقل من 100ج</button>
+        <button class="qf-btn" data-max="300">أقل من 300ج</button>
+        <button class="qf-btn" data-sort="priceAsc">الأرخص الأول</button>
+      </div>
+
+      <div id="grid" class="grid" aria-live="polite"></div>
+      <div id="empty" class="empty" style="display:none">مفيش نتائج مطابقة.</div>
+    </div>
+  </div>
+
+  <div class="orderbar" id="orderbar" style="display:none">
+    <div class="order-info">
+      <div class="order-steps">
+        <span class="order-steps-pill">٢</span>
+        <span class="order-steps-text">راجعي طلبك وبعدين ابعتيه على واتساب</span>
+      </div>
+      <div class="order-meta">
+        <div class="count" id="orderCount">0 صنف</div>
+        <div class="total" id="orderTotal">—</div>
+        <div class="order-note">💵 الدفع عند الاستلام</div>
+      </div>
+    </div>
+    <div class="order-actions">
+      <button class="go" id="sendWA">إرسال واتساب</button>
+      <button class="cartbtn" id="toggleDrawer">عرض المختار</button>
+      <button class="clear" id="clearSel">مسح</button>
+    </div>
+  </div>
+
+  <canvas class="confetti" id="confetti" width="0" height="0"></canvas>
+
+  <aside id="drawer" class="drawer" aria-live="polite">
+    <div class="drawer-header">
+      <h2>اختياراتك</h2>
+      <button id="closeDrawer" class="drawer-close" aria-label="إغلاق">×</button>
+    </div>
+    <ul id="cartList" class="cartlist"></ul>
+  </aside>
+
+  <div id="overlay" class="overlay" role="dialog" aria-modal="true">
+    <div class="modal pop">
+      <h3>بيانات التواصل والتسليم</h3>
+      <div class="formrow">
+        <label>رقم الموبايل للتواصل</label>
+        <input id="custPhone" type="tel" inputmode="tel" placeholder="مثال: 0100xxxxxxx">
+      </div>
+      <div class="formrow">
+        <label>العنوان بالتفصيل</label>
+        <textarea id="custAddr" rows="3" placeholder="المدينة، الشارع، رقم البيت/الدور/علامة مميزة…"></textarea>
+      </div>
+      <div class="mfoot">
+        <button class="cancel" id="closeModal">إلغاء</button>
+        <button class="ok" id="confirmSend">تأكيد الإرسال</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="exitOverlay" class="overlay" role="dialog" aria-modal="true" aria-labelledby="exitTitle">
+    <div class="modal">
+      <h3 id="exitTitle">هتمشي وتسيبي طنط كوكي؟</h3>
+      <p style="margin:0 0 10px;font-size:14px;color:var(--muted);">
+        لو لسه بتظبّطي طلب الطبخة أو العزومة، خليكي مع طنط كوكي شوية كمان 😋
+      </p>
+      <div class="mfoot">
+        <button class="cancel" id="stayOnSite">لا، كملّي تصفح</button>
+        <button class="ok" id="exitSite">أيوه، اقفل الصفحة</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="installHint" class="install-hint" aria-hidden="true">
+    <div class="install-icon">📲</div>
+    <div class="install-body">
+      <div class="install-title">ثبّتي طنط كوكي على موبايلك؟</div>
+      <div class="install-text">
+        يبقى عندك زرار واحد تفتحي منه الطلبات بسرعة، من غير تسجيل ولا تعقيد.
+      </div>
+    </div>
+    <div class="install-actions">
+      <button id="installNow" class="install-primary">يلا بينا</button>
+      <button id="installLater" class="install-secondary">مش دلوقتي</button>
+    </div>
+  </div>
+
+  <section class="trust">
+    <div class="wrap trust-wrap">
+      <h2 class="trust-title" data-reveal>ليه طنط كوكي؟</h2>
+      <div class="trust-grid">
+        <article class="trust-card" data-reveal>
+          <div class="trust-icon">🥩</div>
+          <div class="trust-text">
+            <h3>لحوم طازة ومتجربة</h3>
+            <p>كل قطعة متراجَعة كويس ومختارة على مزاج ست البيت المصرية.</p>
+          </div>
+        </article>
+        <article class="trust-card" data-reveal>
+          <div class="trust-icon">📦</div>
+          <div class="trust-text">
+            <h3>تغليف وتخزين آمن</h3>
+            <p>تغليف محكم يناسب التجميد والحفظ في الفريزر بدون وجع دماغ.</p>
+          </div>
+        </article>
+        <article class="trust-card" data-reveal>
+          <div class="trust-icon">🚚</div>
+          <div class="trust-text">
+            <h3>توصيل لحد باب البيت</h3>
+            <p>دفع عند الاستلام، واتساب أو مكالمة… اللي يريحك.</p>
+          </div>
+        </article>
+      </div>
+      <div class="trust-foot" data-reveal>
+        <span class="trust-chip">دفع عند الاستلام</span>
+        <span class="trust-chip">مفيش تسجيل</span>
+        <span class="trust-chip">واتساب دايمًا شغال</span>
+      </div>
+    </div>
+  </section>
+</main>
+</body>
+</html>
